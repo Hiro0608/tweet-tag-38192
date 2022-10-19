@@ -16,9 +16,9 @@
       </div>
       <div class="prototype__body">
         <div class="prototype__detail">
-          <p class="detail__title">場所</p>
+          <p class="detail__title">タイトル</p>
           <p class="detail__message">
-            <%= @prototype.place %>
+            <%= @prototype.title %>
           </p>
         </div>
         <div class="prototype__detail">
@@ -30,7 +30,7 @@
       </div>
       <div class="prototype__comments">
         <% if user_signed_in? %>
-          <%= form_with model: [@prototype], local: true do |f|%>
+          <%= form_with model: [@prototype, @comment], local: true do |f|%>
             <div class="field">
               <%= f.label :content, "コメント" %><br />
               <%= f.text_field :content, id:"comment_content" %>
@@ -41,6 +41,12 @@
           <% end %>
         <% end %>
         <ul class="comments_lists">
+          <% @comments.each do |comment| %>
+            <li class="comments_list">
+              <%= comment.content%>
+              <%= link_to "（#{comment.user.nickname}）", user_path(comment.user), class: :comment_user %>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
